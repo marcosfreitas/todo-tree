@@ -90,16 +90,13 @@ class TodoDataProvider
 
         var colour = "";
 
-        for( var mapping in colourMappings )
+        Object.keys( colourMappings ).forEach( mapping =>
         {
-            if( colourMappings.hasOwnProperty( mapping ) )
+            if( text.match( mapping ) )
             {
-                if( text.match( mapping ) )
-                {
-                    colour = colourMappings[ mapping ];
-                }
+                colour = colourMappings[ mapping ];
             }
-        }
+        } );
 
         if( colour === "" )
         {
