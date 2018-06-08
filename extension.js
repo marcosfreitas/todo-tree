@@ -380,6 +380,9 @@ function activate( context )
         var expanded = vscode.workspace.getConfiguration( 'todo-tree' ).expanded;
         vscode.commands.executeCommand( 'setContext', 'todo-tree-show-expand', !expanded );
         vscode.commands.executeCommand( 'setContext', 'todo-tree-show-collapse', expanded );
+        var grouped = vscode.workspace.getConfiguration( 'todo-tree' ).grouped;
+        vscode.commands.executeCommand( 'setContext', 'todo-tree-show-group', !grouped );
+        vscode.commands.executeCommand( 'setContext', 'todo-tree-show-ungroup', grouped );
     }
 
     function showFlatView()
@@ -433,6 +436,16 @@ function activate( context )
     function expand()
     {
         vscode.workspace.getConfiguration( 'todo-tree' ).update( 'expanded', true, false );
+    }
+
+    function groupByTag()
+    {
+        vscode.workspace.getConfiguration( 'todo-tree' ).update( 'grouped', true, false );
+    }
+
+    function ungroupByTag()
+    {
+        vscode.workspace.getConfiguration( 'todo-tree' ).update( 'grouped', false, false );
     }
 
     function clearFilter()
@@ -497,6 +510,8 @@ function activate( context )
         context.subscriptions.push( vscode.commands.registerCommand( 'todo-tree.showTreeView', showTreeView ) );
         context.subscriptions.push( vscode.commands.registerCommand( 'todo-tree.expand', expand ) );
         context.subscriptions.push( vscode.commands.registerCommand( 'todo-tree.collapse', collapse ) );
+        context.subscriptions.push( vscode.commands.registerCommand( 'todo-tree.groupByTag', groupByTag ) );
+        context.subscriptions.push( vscode.commands.registerCommand( 'todo-tree.ungroupByTag', ungroupByTag ) );
 
         vscode.window.onDidChangeActiveTextEditor( function( e )
         {
